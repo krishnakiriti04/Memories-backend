@@ -6,7 +6,7 @@ const dotenv = require("dotenv").config();
 
 const postRoutes = require("./routes/posts");
 
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const DB_URL = process.env.DB_URL;
 
 const app = express();
