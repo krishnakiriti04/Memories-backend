@@ -31,35 +31,28 @@ const updatePost = async(req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(404).send("No post found with that Id");
     }
-
     const response = await PostMessage.findByIdAndUpdate(id, updateData, { new: true });
-
     res.json(response);
 }
 
-
-
 const deletePost = async(req, res) => {
     const id = req.params.id;
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(404).send("No post found with that Id");
     }
-
     const response = await PostMessage.findByIdAndDelete(id);
     res.json(response);
 }
 
-
 const likePost = async(req, res) => {
     const id = req.params.id;
-
+    const likeType = req.body.type;
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(404).send("No post found with that Id");
     }
 
     const updateLikeCount = await PostMessage.findById(id);
-    updateLikeCount.likeCount++;
+    likeType === "LIKE" ? updateLikeCount.likeCount++ : updateLikeCount.likeCount--;
 
     const response = await PostMessage.findByIdAndUpdate(id, updateLikeCount, { new: true })
     res.json(response);
